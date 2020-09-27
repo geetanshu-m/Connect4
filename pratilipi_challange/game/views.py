@@ -52,7 +52,7 @@ def startGame(request):
             "message":"Started a new game, keep the token safe"
         }, status=status.HTTP_200_OK)
 
-def checkWin(matrix):
+def checkWin(matrix, turn):
     win=0
     for i in range(5,-1,-1):
         for j in range(6,-1,-1):
@@ -98,10 +98,10 @@ def checkWin(matrix):
         if win==1:
             break
 
-        if win==1:
-            return True
-        else:
-            return False
+    if win==1:
+        return True
+    else:
+        return False
 
 
 def validateMoves(userGameId, columnNew, colour):
@@ -133,11 +133,15 @@ def validateMoves(userGameId, columnNew, colour):
                 "row":x,
                 "colour":color
             })
+            matrix[x][columnNew] = color
             breaked = 0
             break
+
+    pprint(matrix)
+    
     if breaked:
-        return False
-    return True
+        return [], False
+    return matrix, True
 
 @api_view(['POST'])
 def makeMove(request):
@@ -168,13 +172,21 @@ def makeMove(request):
                 "message":"Invalid Game ID, try creating new game",
                 "error":str(e)
             })
-        if validateMoves(
-            userGameId, 
-            request.data['column'],
-            request.data['color']
-            ):
+
+        matrix, validMove=validateMoves(
+                                userGameId, 
+                                request.data['column'],
+                                request.data['color']
+                                )
+        if validMove:
+            turn = -1 if request.data['color'] == "red" else 1
+            if checkWin(matrix, turn):
+                userGame.objects.filter(userId=userId, finished=0).update(finished=1)
+                return Response({
+                    "message" : f"{request.data['color']} WON!"
+                })
             return Response({
-                "message":"Valid Moves"
+                "message":"Move recorded"
             })
         else:
             return Response({
