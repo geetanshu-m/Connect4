@@ -75,7 +75,6 @@ def validateMoves(userGameId, columnNew, colour):
         matrix[row][column] = color
     
     color = -1 if colour == "red" else 1
-    print(colour, color)
     breaked = 1
     for x in list(range(5,-1,-1)):
         if matrix[x][columnNew] == 0:
@@ -87,7 +86,6 @@ def validateMoves(userGameId, columnNew, colour):
             })
             breaked = 0
             break
-    pprint(matrix)
     if breaked:
         return False
     return True
