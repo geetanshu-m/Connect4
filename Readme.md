@@ -2,8 +2,10 @@
 
 ### Features
 
+- build using django
 - creating users
 - starting new game for the users
+- user game many to many relationship
 - changing the status of the game to finished when reset or someone win
 - total win for a particular user
 - all data being saved to the database
@@ -46,3 +48,14 @@ otherwise
 }
 ```
 
+### POST /game/makeMove/
+
+```
+{
+    "user_token":"token",
+    "column",
+    "color"
+}
+```
+
+if you win this will return succcess win and start a new game for you automatically otherwise there will be set if error which will be shown.
