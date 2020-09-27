@@ -1,5 +1,13 @@
 # Connect 4 API
 
+### Features
+
+- creating users
+- starting new game for the users
+- changing the status of the game to finished when reset or someone win
+- total win for a particular user
+- all data being saved to the database
+
 ### POST /game/start/
 
 this will create new user token 
