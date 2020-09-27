@@ -52,7 +52,56 @@ def startGame(request):
             "message":"Started a new game, keep the token safe"
         }, status=status.HTTP_200_OK)
 
-# def checkWin(matrix):
+def checkWin(matrix):
+    win=0
+    for i in range(5,-1,-1):
+        for j in range(6,-1,-1):
+            if matrix[i][j]!=turn:
+                continue
+            # row wise check:
+            cntr=0
+            for k in list(range(0,4)):
+                if (j-k) < 0:
+                    break
+                if matrix[i][j-k]==turn:
+                    cntr+=1
+                else:
+                    break
+            if cntr==4:
+                win=1
+                break
+            #column wise check:
+            cntr=0
+            for k in list(range(0,4)):
+                if (i-k) <0:
+                    break
+                if matrix[i-k][j]==turn:
+                    cntr+=1
+                else:
+                    break
+
+            if cntr==4:
+                win=1
+                break
+            # diagonally check:
+            cntr=0
+            for k in list(range(0,4)):
+                if ((i-k<0) or (j-k<0)):
+                    break
+                if matrix[i-k][j-k]==turn:
+                    cntr+=1
+                else:
+                    break
+            if cntr==4:
+                win=1
+                break
+        if win==1:
+            break
+
+        if win==1:
+            return True
+        else:
+            return False
 
 
 def validateMoves(userGameId, columnNew, colour):
