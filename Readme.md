@@ -59,3 +59,12 @@ otherwise
 ```
 
 if you win this will return succcess win and start a new game for you automatically otherwise there will be set if error which will be shown.
+
+### How to run it
+
+```
+pipenv install 
+pipenv shell 
+python manage.py migrate
+python manage.py runserver
+```
