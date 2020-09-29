@@ -14,3 +14,10 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pratilipi_challange.settings')
 
 application = get_wsgi_application()
+# import os
+
+# from whitenoise.django import DjangoWhiteNoise
+
+# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'pratilipi_challange.settings')
+
+# application = DjangoWhiteNoise(application)

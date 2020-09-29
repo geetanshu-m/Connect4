@@ -106,7 +106,7 @@ def checkWin(matrix, turn):
 
 def validateMoves(userGameId, columnNew, colour):
 
-    if columnNew>6:
+    if columnNew>7 or columnNew<1 :
         return False
     columnNew -= 1
     gameMovesObjs = gameMoves.objects.filter(userGameId=userGameId)

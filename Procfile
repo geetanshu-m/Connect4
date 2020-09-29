@@ -1,0 +1,1 @@
+web: gunicorn pratilipi_challange.wsgi --log-file -
