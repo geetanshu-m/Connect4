@@ -106,11 +106,18 @@ def checkWin(matrix, turn):
 
 def validateMoves(userGameId, columnNew, colour):
 
-    if columnNew>6:
-        return False
+    # validate column
+    if columnNew>7 or columnNew<0:
+        return [],False
     columnNew -= 1
+    # validate turn
+    color = str(-1) if colour == "red" else str(1)
     gameMovesObjs = gameMoves.objects.filter(userGameId=userGameId)
-    
+    if gameMovesObjs.count() >0:
+        lastMove = gameMovesObjs.last().colour
+        if color == lastMove:
+            return [], False
+
     matrix = []
     for i in range(6):
         matrix.append([])
@@ -123,7 +130,7 @@ def validateMoves(userGameId, columnNew, colour):
         color = x.colour
         matrix[row][column] = color
     
-    color = -1 if colour == "red" else 1
+    color = '-1' if colour == "red" else '1'
     breaked = 1
     for x in list(range(5,-1,-1)):
         if matrix[x][columnNew] == 0:
@@ -158,6 +165,7 @@ def makeMove(request):
             return Response({
                 "message":"Colour not present"
             })
+        user = None
         try:
             user = users.objects.get(userId=request.data['user_token'])
         except Exception as e:
@@ -180,8 +188,8 @@ def makeMove(request):
                                 )
         if validMove:
             turn = -1 if request.data['color'] == "red" else 1
-            if checkWin(matrix, turn):
-                userGame.objects.filter(userId=userId, finished=0).update(finished=1)
+            if checkWin(matrix, str(turn)):
+                userGame.objects.filter(userId=user, finished=0).update(finished=1)
                 return Response({
                     "message" : f"{request.data['color']} WON!"
                 })
