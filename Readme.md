@@ -1,5 +1,10 @@
 # Connect 4 API
 
+### Deployment
+
+- [Heroku](https://connect4-game1.herokuapp.com/)
+- [Documentation](https://documenter.getpostman.com/view/8320262/TVRg6UrM)
+
 ### Features
 
 - build using django
